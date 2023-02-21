@@ -25,12 +25,6 @@ const LoginScreen = ({navigation}) => {
 
   const passwordInputRef = createRef();
 
-  // useEffect(() => {
-  //   setUserEmail('');
-  //   setUserPassword('');
-  //   //textInput.clear()
-  // },[]);
-
   useEffect(() => {
       const saveData = async () => {
         try {
@@ -60,9 +54,6 @@ const LoginScreen = ({navigation}) => {
       alert('enter valid email address');
       return;
     }
-    //  saveData(userEmail);
-    //  setInput('');
-
 
      setLoading(true);
 

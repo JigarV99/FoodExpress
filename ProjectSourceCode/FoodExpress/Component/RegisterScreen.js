@@ -66,17 +66,10 @@ const RegisterScreen = (props) => {
       return;
     }
 
-    
-
     if (userPhoneNumber.length != 10 ){
       alert('enter valid phoneNumber');
       return;
     }
-
-    // if (regP.test(userPassword) === false) {
-    //   alert('enter policy password');
-    //   return;
-    // }
 
     //Show Loader
     let dataToSend = 

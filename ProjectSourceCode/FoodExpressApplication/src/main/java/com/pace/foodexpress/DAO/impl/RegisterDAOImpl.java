@@ -31,7 +31,7 @@ public class RegisterDAOImpl implements RegisterDAO{
 				status.setResponseMessage("Account with email already exist. Please try a different email to register");
 			} else {
 				int updateStatus = jdbcTemplate.update(
-		                "insert into foodExpressUser (userID, firstName, lastName, email, areaCode, phoneNumber, password) values(foodExpressUser_seq.nextval,?,?,?,?,?,?)",
+		                "insert into foodExpressUser (userID, firstName, lastName, email, areaCode, phoneNumber, password) values(nextval('foodExpressUser_seq'),?,?,?,?,?,?)",
 		                foodexpressuser.getFirstName(), foodexpressuser.getLastName(), foodexpressuser.getEmail(), foodexpressuser.getAreaCode(), foodexpressuser.getPhoneNumber(), foodexpressuser.getPassword());
 				if(updateStatus == 1) {
 					status.setStatusResponse("Success");

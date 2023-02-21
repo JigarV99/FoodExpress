@@ -10,11 +10,11 @@ PODS:
     - ExpoModulesCore
   - EXFont (10.2.1):
     - ExpoModulesCore
-  - Expo (46.0.16):
+  - Expo (46.0.20):
     - ExpoModulesCore
   - ExpoKeepAwake (10.2.0):
     - ExpoModulesCore
-  - ExpoModulesCore (0.11.8):
+  - ExpoModulesCore (0.11.10):
     - React-Core
     - ReactCommon/turbomodule/core
   - FBLazyVector (0.70.4)
@@ -626,9 +626,9 @@ SPEC CHECKSUMS:
   EXConstants: 7c44785d41d8e959d527d23d29444277a4d1ee73
   EXFileSystem: 927e0a8885aa9c49e50fc38eaba2c2389f2f1019
   EXFont: 06df627203afcb8a3b3152ec06eb2f11f46f0cff
-  Expo: 7ac824960a6059d6c68e73f432c8e6bf6d92a0ef
+  Expo: c2afed3f226befffaed962e9bacb5e0296acd254
   ExpoKeepAwake: 0e8f18142e71bbf2c7f6aa66ebed249ba1420320
-  ExpoModulesCore: 39ec590ce622289c060183aba57f77b1e73b4e11
+  ExpoModulesCore: 1b2f5f91eff132671f6d0642aad2ba7915c6ff41
   FBLazyVector: 8a28262f61fbe40c04ce8677b8d835d97c18f1b3
   FBReactNativeSpec: b475991eb2d8da6a4ec32d09a8df31b0247fa87d
   Flipper: 26fc4b7382499f1281eb8cb921e5c3ad6de91fe0
@@ -676,7 +676,7 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNGestureHandler: 62232ba8f562f7dea5ba1b3383494eb5bf97a4d3
-  RNReanimated: 1d7eff83ea61665c4c9fc936fce64a367b56b920
+  RNReanimated: 17530eb5afd8cb8ed754bea9dc433bf6eba8f578
   RNScreens: 34cc502acf1b916c582c60003dc3089fa01dc66d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 1f02ef4ce4469aefc36167138441b27d988282b1
