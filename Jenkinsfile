@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-                sh 'sudo python3 /Users/gayatrimaa/Documents/jenkins/deployQA.py'
+                sh 'sudo python3 /home/ubuntu/deployScript.py'
             }
         }
     }
