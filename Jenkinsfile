@@ -1,11 +1,12 @@
 pipeline {
     agent any
-
+    triggers {
+        githubPush()
+    }
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh 'python3 /home/ubuntu/deployScript.py'
+                sh 'sudo python3 /home/ubuntu/deployScript.py'
             }
         }
     }
