@@ -62,7 +62,7 @@ const LoginScreen = ({navigation}) => {
       email: userEmail,
       password: userPassword});
       console.log(dataToSend);
-    fetch('http://10.163.129.8:8080/foodexpressuser/login', {
+    fetch('http://ec2-54-160-82-206.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
       method: 'POST',
       body:  dataToSend,
       headers: {
