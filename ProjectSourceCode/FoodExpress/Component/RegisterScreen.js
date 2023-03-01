@@ -80,9 +80,9 @@ const RegisterScreen = (props) => {
       areaCode : 1,
       phoneNumber : userPhoneNumber,
       password: userPassword});
-    setLoading(true);
-     console.log(dataToSend);
-    fetch('http://10.163.129.8:8080/foodexpressuser/register', {
+      setLoading(true);
+      console.log(dataToSend);
+      fetch('http://ec2-18.207.1.112.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/register', {
       method: 'POST',
       body:  dataToSend,
       headers: {
