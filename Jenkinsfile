@@ -15,5 +15,6 @@ pipeline {
                 sh 'sudo python3 /home/ubuntu/deployQA.py'
             }
         }
+        
     }
 }
