@@ -40,6 +40,7 @@ import Account from './Component/Account';
 import LoginScreen from './Component/LoginScreen';
 import RegisterScreen from './Component/RegisterScreen';
 import Restaurant from './Component/Restaurant';
+import OrderDelivery from './Component/OrderDelivery'
 
 // function Home() {
 //   return (
@@ -173,6 +174,8 @@ const App: () => Node = () => {
       options={{headerShown: false}}
     />  
     <Stack.Screen name="Restaurant" component={Restaurant}  options={{headerShown: false}} />
+
+    <Stack.Screen name="OrderDelivery" component={OrderDelivery} options={{headerShown: false}}/>
     {/* Navigation Drawer as a landing page */}
   </Stack.Navigator>
 </NavigationContainer>
