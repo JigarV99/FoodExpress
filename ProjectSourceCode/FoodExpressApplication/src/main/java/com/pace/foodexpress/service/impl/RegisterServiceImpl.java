@@ -29,6 +29,10 @@ public class RegisterServiceImpl implements RegisterService {
 	    return registerDAO.loginUser(foodexpressuser);
 	}
 	
+	public UserDetails updateUser(FoodExpressUser foodexpressuser) {
+	    return registerDAO.updateUser(foodexpressuser);
+	}
+	
 	public List<FoodExpressUser> getUserDetails(String userId) {
 		return registerDAO.getUserDetails(userId);
 	}

@@ -39,6 +39,14 @@ public class RegisterController {
 		return registerService.loginUser(foodexpressuser);
 	}
 	
+	@PostMapping("/foodexpressuser/update")
+	public UserDetails updateUser(@RequestBody FoodExpressUser foodexpressuser ,HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "GET");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+		return registerService.updateUser(foodexpressuser);
+	}
+	
 	@GetMapping("/getfoodexpressuser/{id}")
 	public List<FoodExpressUser> getUserDetails(@PathVariable("id") String userId, HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");

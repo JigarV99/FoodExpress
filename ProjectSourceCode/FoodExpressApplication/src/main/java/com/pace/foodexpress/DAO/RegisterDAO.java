@@ -13,6 +13,8 @@ public interface RegisterDAO {
 	
 	public UserDetails loginUser(FoodExpressUser foodexpressuser);
 	
+	public UserDetails updateUser(FoodExpressUser foodexpressuser);
+	
 	public List<FoodExpressUser> getUserDetails(String userId);
 
 }
