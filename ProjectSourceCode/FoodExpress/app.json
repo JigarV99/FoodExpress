@@ -1,4 +1,7 @@
 {
   "name": "FoodDelivery",
-  "displayName": "FoodDelivery"
+  "displayName": "FoodDelivery",
+  "ios": {
+    "bundleIdentifier": "com.jigar99.fooddelivery"
+  }
 }
