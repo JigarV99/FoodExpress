@@ -2,6 +2,7 @@ package com.pace.foodexpress.DAO.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import com.pace.foodexpress.DAO.RegisterDAO;
 import com.pace.foodexpress.VO.FoodExpressUser;
 import com.pace.foodexpress.VO.Status;
 import com.pace.foodexpress.VO.UserDetails;
+
+import io.micrometer.common.util.StringUtils;
 
 @Repository
 public class RegisterDAOImpl implements RegisterDAO{
@@ -74,6 +77,62 @@ public class RegisterDAOImpl implements RegisterDAO{
 		} finally {
 			userDetails.setStatus(status);
 		}
+		return userDetails;
+		
+	}
+	
+	@Override
+	public UserDetails updateUser(FoodExpressUser foodexpressuser){
+		UserDetails userDetails =  new UserDetails();
+		Status status = new Status();
+		List<FoodExpressUser> listOfUserDetails = new ArrayList<>();
+		int result = 0;
+//		try {
+			List<FoodExpressUser> userList = jdbcTemplate.query("select * from foodExpressUser where email = ?", new Object[] {foodexpressuser.getEmail()}, new BeanPropertyRowMapper(FoodExpressUser.class));
+			if(userList != null  && !userList.isEmpty()) {
+				StringBuilder query = new StringBuilder("update foodExpressUser set ");
+				if(!StringUtils.isEmpty(foodexpressuser.getFirstName()) && !StringUtils.isEmpty(foodexpressuser.getLastName())) {
+					query.append("firstName = ?, lastName = ?");
+					query.append(" where email = ?");
+					System.out.println(query);
+					result =   jdbcTemplate
+			                .update(query.toString(), new Object[] {foodexpressuser.getFirstName(), foodexpressuser.getLastName(), foodexpressuser.getEmail()});
+				}
+				if(foodexpressuser.getPhoneNumber() != null) {
+					query.append("phoneNumber = ?");
+					query.append(" where email = ?");
+					System.out.println(query);
+					result =   jdbcTemplate
+			                .update(query.toString(), new Object[] {foodexpressuser.getPhoneNumber(), foodexpressuser.getEmail()});
+				}
+				if(!StringUtils.isEmpty(foodexpressuser.getNewEmail())) {
+					query.append("email = ?");
+					query.append(" where email = ?");
+					System.out.println(query);
+					result =   jdbcTemplate
+			                .update(query.toString(), new Object[] {foodexpressuser.getNewEmail(), foodexpressuser.getEmail()});
+				}
+				
+				if(result>0) {
+					status.setStatusResponse("Success");
+					listOfUserDetails =   jdbcTemplate
+			                .query("select * from foodExpressUser where email=?", new Object[] {StringUtils.isEmpty(foodexpressuser.getNewEmail()) ? foodexpressuser.getEmail() : foodexpressuser.getNewEmail()},new BeanPropertyRowMapper(FoodExpressUser.class) );
+					
+				} else {
+					status.setStatusResponse("Failed");
+					status.setResponseMessage("No Account exists for this email");
+				}
+				userDetails.setUserDetailsList(listOfUserDetails);
+			} else {
+				status.setStatusResponse("Failed");
+				status.setResponseMessage("No Account exists for this email");
+			}
+//		} catch(Exception exception) {
+//			status.setStatusResponse("Failed");
+//			status.setResponseMessage("Account Update failed! Please try again later");
+//		} finally {
+//			userDetails.setStatus(status);
+//		}
 		return userDetails;
 		
 	}

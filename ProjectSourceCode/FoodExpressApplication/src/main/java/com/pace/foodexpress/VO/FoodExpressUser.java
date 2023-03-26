@@ -10,6 +10,8 @@ public class FoodExpressUser {
 	
 	private String email;
 	
+	private String newEmail;
+	
 	private String password;
 	
 	private Integer areaCode;
@@ -80,6 +82,20 @@ public class FoodExpressUser {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	/**
+	 * @return the newEmail
+	 */
+	public String getNewEmail() {
+		return newEmail;
+	}
+
+	/**
+	 * @param newEmail the newEmail to set
+	 */
+	public void setNewEmail(String newEmail) {
+		this.newEmail = newEmail;
 	}
 	
 	/**
@@ -179,5 +195,6 @@ public class FoodExpressUser {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
+
 	
 }

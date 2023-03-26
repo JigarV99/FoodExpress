@@ -13,5 +13,7 @@ public interface RegisterService {
 	
 	public UserDetails loginUser(FoodExpressUser foodexpressuser);
 	
+	public UserDetails updateUser(FoodExpressUser foodexpressuser);
+	
 	public List<FoodExpressUser> getUserDetails(String userId);
 }
