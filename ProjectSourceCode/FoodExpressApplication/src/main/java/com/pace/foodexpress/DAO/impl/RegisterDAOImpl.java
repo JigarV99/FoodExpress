@@ -86,32 +86,11 @@ public class RegisterDAOImpl implements RegisterDAO{
 		UserDetails userDetails =  new UserDetails();
 		Status status = new Status();
 		List<FoodExpressUser> listOfUserDetails = new ArrayList<>();
-		int result = 0;
-//		try {
+		try {
 			List<FoodExpressUser> userList = jdbcTemplate.query("select * from foodExpressUser where email = ?", new Object[] {foodexpressuser.getEmail()}, new BeanPropertyRowMapper(FoodExpressUser.class));
 			if(userList != null  && !userList.isEmpty()) {
-				StringBuilder query = new StringBuilder("update foodExpressUser set ");
-				if(!StringUtils.isEmpty(foodexpressuser.getFirstName()) && !StringUtils.isEmpty(foodexpressuser.getLastName())) {
-					query.append("firstName = ?, lastName = ?");
-					query.append(" where email = ?");
-					System.out.println(query);
-					result =   jdbcTemplate
-			                .update(query.toString(), new Object[] {foodexpressuser.getFirstName(), foodexpressuser.getLastName(), foodexpressuser.getEmail()});
-				}
-				if(foodexpressuser.getPhoneNumber() != null) {
-					query.append("phoneNumber = ?");
-					query.append(" where email = ?");
-					System.out.println(query);
-					result =   jdbcTemplate
-			                .update(query.toString(), new Object[] {foodexpressuser.getPhoneNumber(), foodexpressuser.getEmail()});
-				}
-				if(!StringUtils.isEmpty(foodexpressuser.getNewEmail())) {
-					query.append("email = ?");
-					query.append(" where email = ?");
-					System.out.println(query);
-					result =   jdbcTemplate
-			                .update(query.toString(), new Object[] {foodexpressuser.getNewEmail(), foodexpressuser.getEmail()});
-				}
+				int result =   jdbcTemplate
+		                .update("update foodExpressUser set firstName = ?, lastName = ?, phoneNumber = ?, email = ? where email = ?", new Object[] {foodexpressuser.getFirstName(), foodexpressuser.getLastName(), foodexpressuser.getPhoneNumber(), StringUtils.isEmpty(foodexpressuser.getNewEmail()) ? foodexpressuser.getEmail() : foodexpressuser.getNewEmail(), foodexpressuser.getEmail()});
 				
 				if(result>0) {
 					status.setStatusResponse("Success");
@@ -127,12 +106,12 @@ public class RegisterDAOImpl implements RegisterDAO{
 				status.setStatusResponse("Failed");
 				status.setResponseMessage("No Account exists for this email");
 			}
-//		} catch(Exception exception) {
-//			status.setStatusResponse("Failed");
-//			status.setResponseMessage("Account Update failed! Please try again later");
-//		} finally {
-//			userDetails.setStatus(status);
-//		}
+		} catch(Exception exception) {
+			status.setStatusResponse("Failed");
+			status.setResponseMessage("Account Update failed! Please try again later");
+		} finally {
+			userDetails.setStatus(status);
+		}
 		return userDetails;
 		
 	}
