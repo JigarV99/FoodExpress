@@ -22,6 +22,8 @@ const LoginScreen = ({navigation}) => {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
+  const [jsnon,setjson] = useState(null);
+
 
   const passwordInputRef = createRef();
 
@@ -29,7 +31,8 @@ const LoginScreen = ({navigation}) => {
       const saveData = async () => {
         try {
           console.log(userName);
-          await AsyncStorage.setItem("@user_name", userName);
+          
+          await AsyncStorage.setItem("@user_name",  userName);
           // alert('Data successfully saved')
         } catch (e) {
           // alert('Failed to save the data to the storage')
@@ -37,6 +40,27 @@ const LoginScreen = ({navigation}) => {
       };
       saveData();
   });
+
+  useEffect(() => {
+    const saveData = async () => {
+      try {
+        console.log("9999");
+        
+        await  AsyncStorage.setItem("@data", JSON.stringify(jsnon), (err)=> {
+          
+          console.log("success99");
+      }).catch((err)=> {
+          console.log("error is: " + err);
+      });
+        // alert('Data successfully saved')
+      } catch (e) {
+        // alert('Failed to save the data to the storage')
+      }
+    };
+    saveData();
+},[]);
+
+  
 
   const handleSubmitPress = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -63,7 +87,7 @@ const LoginScreen = ({navigation}) => {
       password: userPassword});
       console.log(dataToSend);
       //aws sucks
-    fetch('http://ec2-54-157-138-8.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
+    fetch('http://ec2-18-234-107-170.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
       method: 'POST',
       body:  dataToSend,
       headers: {
@@ -80,6 +104,28 @@ const LoginScreen = ({navigation}) => {
         // If server response message same as Data Matched
         if (responseJson.status.statusResponse == "Success") {
           if (responseJson.userDetailsList != null) {
+             try {
+          console.log(userName+"kkmkm");
+          
+        //   await AsyncStorage.setItem("@user", JSON.stringify(userDetailsList[0]), (err)=> {
+        //     if(err){
+        //         console.log("an error");
+                
+        //     }
+        //     console.log("success---");
+        //     console.log(userDetailsList[0]);
+        // }).catch((err)=> {
+        //     console.log("error is: " + err);
+        // });
+
+       
+        
+          // alert('Data successfully saved')
+        } catch (e) {
+          // alert('Failed to save the data to the storage')
+        }
+            setjson(responseJson.userDetailsList[0]);
+            console.log(responseJson.userDetailsList[0]);
             setUserName(responseJson.userDetailsList[0].firstName + ' ' + responseJson.userDetailsList[0].lastName ) 
           }
          

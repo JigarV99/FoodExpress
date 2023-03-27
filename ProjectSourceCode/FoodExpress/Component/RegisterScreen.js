@@ -82,7 +82,7 @@ const RegisterScreen = (props) => {
       password: userPassword});
       setLoading(true);
       console.log(dataToSend);
-      fetch('http://ec2-54-157-138-8.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/register', {
+      fetch('http://ec2-100-26-221-57.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/register', {
       method: 'POST',
       body:  dataToSend,
       headers: {

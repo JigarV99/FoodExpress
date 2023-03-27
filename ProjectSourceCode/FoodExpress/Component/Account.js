@@ -7,23 +7,34 @@ import {
     Text,
     useColorScheme,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Image,
+     TextInput 
   } from 'react-native';
 
   import React, {useState,useEffect} from 'react';
-  import { icons, images, SIZES, COLORS, FONTS } from '../constants'
 
   import AsyncStorage from '@react-native-async-storage/async-storage';
-  export default function Account(props) {
+
+
+  const Account = ({navigation}) => {
+  // export default function Account(props) {
+
+
     const [input, setInput] = useState('');
 
   
+    const handleSubmit = () => {
+      navigation.popToTop();
+    }
+    
     useEffect(() => {
       const readData = async () => {
         try {
           
           const value = await AsyncStorage.getItem("@user_name");
           console.log(value);
+          console.log("98998");
           if (value !== null) {
             setInput(value);
           }
@@ -32,62 +43,87 @@ import {
         }
       };
       readData();
-    }, []);
+    },[]);
 
-    return(
-      //  <View style = {[styles.sectionContainer]}> 
-      //  <View style = {[styles.items]}> 
-      //   <Text onPress={()=> props.navigation.popToTop()}>Logout</Text>
-      //  </View>
 
-      //  </View>
-    
-      
-   <View style = {[styles.sectionContainer]}> 
-    <Text style = {{...FONTS.h1}}>{input}</Text>  
-   <TouchableOpacity style={styles.loginBtn}>
-     <Text onPress={()=> props.navigation.popToTop()} >Logout</Text> 
-   </TouchableOpacity>
-   </View>
+    return( 
+  <View style={styles.container}>
+  <View style={styles.avatarContainer}>
+    <Image
+      style={styles.avatar}
+      source={require('../assets/images/avatar-3.jpg')}
+    />
+    <Text style={styles.label}>{input}</Text>
+    <TouchableOpacity style={styles.changeAvatarButton} onPress={() => {
+
+       navigation.navigate('UpdateAccount');
+
+    }}>
+      <Text style={styles.changeAvatarButtonText}>Edit Profile</Text>
+    </TouchableOpacity>
+  </View>
+  <View style={styles.form}>
+
+    <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+      <Text style={styles.buttonText}>Logout</Text>
+    </TouchableOpacity>
+  </View>
+
+</View>
+  
     );
 
   }
   const styles = StyleSheet.create({
-    sectionContainer: {
-      flex : 1,
-      backgroundColor : '#fffff',
-      padding : 5,
+    container: {
+      flex: 1,
+      alignItems: 'center',
+       justifyContent: 'center',
+      marginTop: 20,
     },
-    sectionTitle: {
-      fontSize: 24,
-      fontWeight: '600',
+    form: {
+      width: '80%',
+      marginTop: 400,
     },
-    sectionDescription: {
-      marginTop: 8,
+    label: {
+      marginTop: 20,
+    },
+    input: {
+      borderColor: '#ccc',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
       fontSize: 18,
-      fontWeight: '400',
     },
-    highlight: {
-      fontWeight: '700',
+    button: {
+      backgroundColor: '#1E90FF',
+      borderRadius: 5,
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      // justifyContent: 'center',
     },
-    items : {
-     flex : 0.1,
-     justifyContent: 'center',
-     backgroundColor : '#f0f8ff',
-     padding : 10,
+    buttonText: {
+      color: '#fff',
+      fontSize: 18,
     },
-    separteView : {
-      hieght : 2,
-      width :"100%",
+    avatarContainer: {
+      marginTop: 0,
+      alignItems: 'center',
     },
-    loginBtn: {
-      width: "100%",
-      borderRadius: 25,
-      height: 50,
-      alignItems: "center",
-      justifyContent: "center",
-      marginTop: 550,
-      marginLeft : 40,
-      backgroundColor: "#1e90ff",
+    avatar: {
+      width: 80,
+      height: 80,
+      borderRadius: 50,
+    },
+    changeAvatarButton: {
+      marginTop: 10,
+    },
+    changeAvatarButtonText: {
+      color: '#1E90FF',
+      fontSize: 18,
     },
   });
+  
+
+
+  export default Account;

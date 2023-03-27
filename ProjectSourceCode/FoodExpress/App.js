@@ -35,6 +35,8 @@ import {
 import Account from './Component/Account';
  import  Home from './Component/Home'
  import Search from './Component/Search';
+ 
+ import AccountStack from './Component/AccountStack';
 
  import SplashScreen from './Component/SplashScreen';
 import LoginScreen from './Component/LoginScreen';
@@ -127,8 +129,8 @@ const MyTabs = (props) => {
         }}
       />
       <Tab.Screen
-        name="Account"
-        component={Account}
+        name="AccountStack"
+        component={AccountStack}
         options={{
           tabBarLabel: 'Account',
           tabBarIcon: ({ color, size }) => (
