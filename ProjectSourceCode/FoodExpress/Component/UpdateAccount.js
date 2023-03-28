@@ -1,6 +1,10 @@
 import React, { useState ,useEffect} from 'react';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useRecoilState} from 'recoil'
+import {currentUserState} from '../atoms/user'
+
+
 const UpdateAccount = ({navigation})  => {
  
   
@@ -16,6 +20,7 @@ const UpdateAccount = ({navigation})  => {
       const [userName, setUserName] = useState('');
       const [jsnon,setjson] = useState({email: null ,first :null,last:null,phoneNo:null});
       const [flag, setFlag] = useState(false);
+      const [recoilCurrentUser, setRecoilCurrentUser] = useRecoilState(currentUserState);
 
       useEffect(() => {
         if (flag) {
@@ -36,6 +41,11 @@ const UpdateAccount = ({navigation})  => {
               };
               storeData();
               setFlag(false)
+              setRecoilCurrentUser((prevData) => ({
+                ...prevData,
+                firstName: jsnon.first,
+                lastName: jsnon.last,
+              }))
               navigation.pop();
         }
         

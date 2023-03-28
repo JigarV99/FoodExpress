@@ -12,7 +12,9 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import {useRecoilState} from 'recoil'
 
+import {currentUserState} from '../atoms/user'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from './Loader';
 
@@ -26,6 +28,7 @@ const LoginScreen = ({navigation}) => {
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
   const [jsnon,setjson] = useState({email: null ,first :null,last:null,phoneNo:null});
+  const [recoilCurrentUser, setRecoilCurrentUser] = useRecoilState(currentUserState);
 
 
   const passwordInputRef = createRef();
@@ -48,7 +51,13 @@ const LoginScreen = ({navigation}) => {
         }
       };
       storeData();
-  });
+      setRecoilCurrentUser((prevData) => ({
+        ...prevData,
+        firstName: jsnon.first,
+        lastName: jsnon.last,
+      }))
+    console.log({recoilCurrentUser})
+  }, [jsnon]);
 
   const handleSubmitPress = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -92,12 +101,12 @@ const LoginScreen = ({navigation}) => {
         // If server response message same as Data Matched
         if (responseJson.status.statusResponse == "Success") {
           if (responseJson.userDetailsList != null) {
-             try {
-          console.log(userName+"kkmkm");
-                // alert('Data successfully saved')
-        } catch (e) {
-          // alert('Failed to save the data to the storage')
-        }
+            try {
+              console.log(userName+"kkmkm");
+              // alert('Data successfully saved')
+            } catch (e) {
+            // alert('Failed to save the data to the storage')
+            }
             // setjson(responseJson.userDetailsList[0]);
             console.log(responseJson.userDetailsList[0]);
             setjson((prevData) => ({
@@ -113,8 +122,7 @@ const LoginScreen = ({navigation}) => {
             // setUserPhonenumber(responseJson.userDetailsList[0].phoneNumber)
             // setUserEmail(responseJson.userDetailsList[0].email)
           }
-         
-          navigation.navigate('MyTabs')
+         navigation.navigate('MyTabs')
         } else {
           // setErrortext('Please check your email id or password');
           // console.log('Please check your email id or password');

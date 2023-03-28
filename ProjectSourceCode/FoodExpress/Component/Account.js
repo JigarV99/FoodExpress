@@ -7,30 +7,28 @@ import {
     Text,
     useColorScheme,
     View,
-    TouchableOpacity,
     Image,
+    TouchableOpacity,
      TextInput 
   } from 'react-native';
 
   import React, {useState,useEffect} from 'react';
-  // import { useNavigation } from '@react-navigation/native';
+
   import AsyncStorage from '@react-native-async-storage/async-storage';
 
+  import { useRecoilValue } from "recoil";
+  import {currentUserState} from '../atoms/user'
 
   const Account = ({navigation}) => {
   // export default function Account(props) {
 
-    const [dataFromNextScreen, setDataFromNextScreen] = useState('');
-    // const [dataFromNextScreen, dataFromNextScreen] = useState('');
-    // const navigation = useNavigation();
+    const [input, setInput] = useState('');
+    const recoilCurrentUser = useRecoilValue(currentUserState);
   
     const handleSubmit = () => {
       navigation.popToTop();
     }
-
-    const handleDataFromNextScreen = (data) => {
-      setDataFromNextScreen(data);
-    };
+    
     
     useEffect(() => {
       const readData = async () => {
@@ -39,14 +37,14 @@ import {
           const value = await AsyncStorage.getItem("@user_name");
           console.log({value});
           if (value !== null) {
-            setDataFromNextScreen(value);
+            setInput(value);
           }
         } catch (e) {
           //alert('Failed to fetch the input from storage');
         }
       };
       readData();
-    },[dataFromNextScreen]);
+    });
 
 
     return( 
@@ -56,15 +54,10 @@ import {
       style={styles.avatar}
       source={require('../assets/images/avatar-3.jpg')}
     />
-    <Text style={styles.label}>{dataFromNextScreen}</Text>
+    <Text style={styles.label}>{recoilCurrentUser.firstName} {recoilCurrentUser.lastName}</Text>
     <TouchableOpacity style={styles.changeAvatarButton} onPress={() => {
 
-
-navigation.navigate('UpdateAccount', {
-  handleDataFromNextScreen: handleDataFromNextScreen,
-})
-
-       //navigation.navigate('UpdateAccount');
+       navigation.navigate('UpdateAccount');
 
     }}>
       <Text style={styles.changeAvatarButtonText}>Edit Profile</Text>

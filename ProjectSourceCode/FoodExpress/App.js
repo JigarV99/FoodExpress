@@ -24,6 +24,8 @@ import {
   FlatList
 } from 'react-native';
 
+import {RecoilRoot} from 'recoil';
+
 import {
   Colors,
   DebugInstructions,
@@ -154,30 +156,34 @@ const App: () => Node = () => {
   //   <MyTabs />
   //  </NavigationContainer>
 
-  <NavigationContainer>
-  <Stack.Navigator initialRouteName="SplashScreen">
-    {/* SplashScreen which will come once for 5 Seconds */}
-    <Stack.Screen
-      name="SplashScreen"
-      component={SplashScreen}
-      // Hiding header for Splash Screen
-      options={{headerShown: false}}
-    />
-    {/* Auth Navigator which includer Login Signup will come once */}
-    <Stack.Screen
-      name="Auth"
-      component={Auth}
-      options={{headerShown: false}}
-    />
-   <Stack.Screen
-      name="MyTabs"
-      component={MyTabs}
-      options={{headerShown: false}}
-    />  
-    <Stack.Screen name="Restaurant" component={Restaurant}  options={{headerShown: false}} />
-    {/* Navigation Drawer as a landing page */}
-  </Stack.Navigator>
-</NavigationContainer>
+
+  <RecoilRoot>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="SplashScreen">
+        {/* SplashScreen which will come once for 5 Seconds */}
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          // Hiding header for Splash Screen
+          options={{headerShown: false}}
+        />
+        {/* Auth Navigator which includer Login Signup will come once */}
+        <Stack.Screen
+          name="Auth"
+          component={Auth}
+          options={{headerShown: false}}
+        />
+      <Stack.Screen
+          name="MyTabs"
+          component={MyTabs}
+          options={{headerShown: false}}
+        />  
+        <Stack.Screen name="Restaurant" component={Restaurant}  options={{headerShown: false}} />
+        {/* Navigation Drawer as a landing page */}
+      </Stack.Navigator>
+    </NavigationContainer>
+  </RecoilRoot>
+  
   );
 };
 
