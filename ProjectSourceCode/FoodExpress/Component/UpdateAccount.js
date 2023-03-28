@@ -104,11 +104,11 @@ const UpdateAccount = ({navigation})  => {
       alert('Please fill Last Name');
       return;
     }
-    if (!email) {
+    if (!emailNew) {
       alert('Please fill Email');
       return;
     }
-     if (reg.test(email) === false) {
+     if (reg.test(emailNew) === false) {
       alert('enter valid email address');
       return;
     } 
@@ -206,7 +206,7 @@ const UpdateAccount = ({navigation})  => {
         <TextInput
           style={styles.input}
           placeholder="Enter Email"
-          value={email}
+          value={emailNew}
           onChangeText={setEmailNew}
         />
         <Text style={styles.label}>Phone Number</Text>
