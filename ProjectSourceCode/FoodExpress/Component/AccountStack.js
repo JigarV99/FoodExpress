@@ -19,7 +19,7 @@ const AccountStack = (props) => {
     <Stack.Screen
       name="UpdateAccount"
       component={UpdateAccount}
-      options={{headerShown: false}}
+      options={{headerShown: true}}
       
     />
     {/* Navigation Drawer as a landing page */}

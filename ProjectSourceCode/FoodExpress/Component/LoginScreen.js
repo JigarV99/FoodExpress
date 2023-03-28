@@ -18,49 +18,37 @@ import Loader from './Loader';
 
 const LoginScreen = ({navigation}) => {
   const [userEmail, setUserEmail] = useState('');
+  const [userPhoneNumber, setUserPhonenumber] = useState(0);
+  const [userFirst, setUserFirst] = useState('');
+  const [userLast, setUserLast] = useState('');
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
-  const [jsnon,setjson] = useState(null);
+  const [jsnon,setjson] = useState({email: null ,first :null,last:null,phoneNo:null});
 
 
   const passwordInputRef = createRef();
 
+
   useEffect(() => {
-      const saveData = async () => {
+      const storeData = async () => {
         try {
-          console.log(userName);
-          
-          await AsyncStorage.setItem("@user_name",  userName);
-          // alert('Data successfully saved')
-        } catch (e) {
-          // alert('Failed to save the data to the storage')
+          // if (jsnon.email !== null){
+            console.log({jsnon});
+            console.log("STORE DATA USE_EFFECT");
+            await AsyncStorage.setItem('@email', JSON.stringify(jsnon.email));
+          //}
+            await AsyncStorage.setItem('@phoneNo',  JSON.stringify(jsnon.phoneNo));
+            await AsyncStorage.setItem('@user_name', userName);
+            await AsyncStorage.setItem('@firstName', JSON.stringify(jsnon.first));
+            await AsyncStorage.setItem('@lastName', JSON.stringify(jsnon.last));
+        } catch (err) {
+          console.log('Error in Login: ', err);
         }
       };
-      saveData();
+      storeData();
   });
-
-  useEffect(() => {
-    const saveData = async () => {
-      try {
-        console.log("9999");
-        
-        await  AsyncStorage.setItem("@data", JSON.stringify(jsnon), (err)=> {
-          
-          console.log("success99");
-      }).catch((err)=> {
-          console.log("error is: " + err);
-      });
-        // alert('Data successfully saved')
-      } catch (e) {
-        // alert('Failed to save the data to the storage')
-      }
-    };
-    saveData();
-},[]);
-
-  
 
   const handleSubmitPress = () => {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
@@ -106,27 +94,24 @@ const LoginScreen = ({navigation}) => {
           if (responseJson.userDetailsList != null) {
              try {
           console.log(userName+"kkmkm");
-          
-        //   await AsyncStorage.setItem("@user", JSON.stringify(userDetailsList[0]), (err)=> {
-        //     if(err){
-        //         console.log("an error");
-                
-        //     }
-        //     console.log("success---");
-        //     console.log(userDetailsList[0]);
-        // }).catch((err)=> {
-        //     console.log("error is: " + err);
-        // });
-
-       
-        
-          // alert('Data successfully saved')
+                // alert('Data successfully saved')
         } catch (e) {
           // alert('Failed to save the data to the storage')
         }
-            setjson(responseJson.userDetailsList[0]);
+            // setjson(responseJson.userDetailsList[0]);
             console.log(responseJson.userDetailsList[0]);
-            setUserName(responseJson.userDetailsList[0].firstName + ' ' + responseJson.userDetailsList[0].lastName ) 
+            setjson((prevData) => ({
+              ...prevData,
+              email: responseJson.userDetailsList[0].email,
+              phoneNo: responseJson.userDetailsList[0].phoneNumber,
+              first: responseJson.userDetailsList[0].firstName,
+              last: responseJson.userDetailsList[0].lastName,
+            }));
+            setUserName(responseJson.userDetailsList[0].firstName + ' ' + responseJson.userDetailsList[0].lastName )
+            // setUserFirst(responseJson.userDetailsList[0].firstName) 
+            // setUserLast(responseJson.userDetailsList[0].lastName)
+            // setUserPhonenumber(responseJson.userDetailsList[0].phoneNumber)
+            // setUserEmail(responseJson.userDetailsList[0].email)
           }
          
           navigation.navigate('MyTabs')

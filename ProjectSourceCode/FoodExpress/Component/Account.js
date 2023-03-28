@@ -13,37 +13,40 @@ import {
   } from 'react-native';
 
   import React, {useState,useEffect} from 'react';
-
+  // import { useNavigation } from '@react-navigation/native';
   import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
   const Account = ({navigation}) => {
   // export default function Account(props) {
 
-
-    const [input, setInput] = useState('');
-
+    const [dataFromNextScreen, setDataFromNextScreen] = useState('');
+    // const [dataFromNextScreen, dataFromNextScreen] = useState('');
+    // const navigation = useNavigation();
   
     const handleSubmit = () => {
       navigation.popToTop();
     }
+
+    const handleDataFromNextScreen = (data) => {
+      setDataFromNextScreen(data);
+    };
     
     useEffect(() => {
       const readData = async () => {
         try {
-          
+          console.log("Inside READ")
           const value = await AsyncStorage.getItem("@user_name");
-          console.log(value);
-          console.log("98998");
+          console.log({value});
           if (value !== null) {
-            setInput(value);
+            setDataFromNextScreen(value);
           }
         } catch (e) {
           //alert('Failed to fetch the input from storage');
         }
       };
       readData();
-    },[]);
+    },[dataFromNextScreen]);
 
 
     return( 
@@ -53,10 +56,15 @@ import {
       style={styles.avatar}
       source={require('../assets/images/avatar-3.jpg')}
     />
-    <Text style={styles.label}>{input}</Text>
+    <Text style={styles.label}>{dataFromNextScreen}</Text>
     <TouchableOpacity style={styles.changeAvatarButton} onPress={() => {
 
-       navigation.navigate('UpdateAccount');
+
+navigation.navigate('UpdateAccount', {
+  handleDataFromNextScreen: handleDataFromNextScreen,
+})
+
+       //navigation.navigate('UpdateAccount');
 
     }}>
       <Text style={styles.changeAvatarButtonText}>Edit Profile</Text>
@@ -70,7 +78,6 @@ import {
   </View>
 
 </View>
-  
     );
 
   }

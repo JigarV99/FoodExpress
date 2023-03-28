@@ -1,51 +1,85 @@
 import React, { useState ,useEffect} from 'react';
 import { View, Text, Image, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const UpdateAccount = ({navigation})  => {
-    const profile = {
-        first: 'Jane Doe',
-        last:'kdksd',
-        email: 'jane.doe@example.com',
-        phoneNo: '982992',
-      }
+ 
   
       const [input, setInput] = useState('');
   
-      const [first, setFirst] = useState(profile.first);
+      const [first, setFirst] = useState('');
       const [loading, setLoading] = useState(false);
       const [errortext, setErrortext] = useState('');
-      const [last, setLast] = useState(profile.last);
-      const [email, setEmail] = useState(profile.email);
-      const [emailNew, setEmailNew] = useState(profile.email);
-      const [phoneNo, setphoneNo] = useState(profile.phoneNo);
+      const [last, setLast] = useState('');
+      const [email, setEmail] = useState('');
+      const [emailNew, setEmailNew] = useState('');
+      const [phoneNo, setphoneNo] = useState(0);
       const [userName, setUserName] = useState('');
-      const [json, setJson] = useState('');
+      const [jsnon,setjson] = useState({email: null ,first :null,last:null,phoneNo:null});
+      const [flag, setFlag] = useState(false);
+
       useEffect(() => {
-        const saveData = async () => {
+        if (flag) {
+            const storeData = async () => {
+                try {
+                  // if (jsnon.email !== null){
+                    console.log({jsnon});
+                    console.log("STORE DATA USE_EFFECT");
+                    await AsyncStorage.setItem('@email', JSON.stringify(jsnon.email));
+                  //}
+                    await AsyncStorage.setItem('@phoneNo',  JSON.stringify(jsnon.phoneNo));
+                    // await AsyncStorage.setItem('@user_name', userName);
+                    await AsyncStorage.setItem('@firstName', JSON.stringify(jsnon.first));
+                    await AsyncStorage.setItem('@lastName', JSON.stringify(jsnon.last));
+                } catch (err) {
+                  console.log('Error in Login: ', err);
+                }
+              };
+              storeData();
+              setFlag(false)
+              navigation.pop();
+        }
+        
+    },[jsnon]);
+
+
+    useEffect(() => {
+        const storeData = async () => {
           try {
-            console.log(userName);
+              await AsyncStorage.setItem('@user_name', userName);
             
-            await AsyncStorage.setItem("@user_name",  userName);
-            // alert('Data successfully saved')
-          } catch (e) {
-            // alert('Failed to save the data to the storage')
+          } catch (err) {
+            console.log('Error in Login: ', err);
           }
         };
-        saveData();
-    },[]);
+        storeData();
+    }, [userName]);
 
     useEffect(() => {
         const user = async () => {
         try {
-          const value = await AsyncStorage.getItem("@data");
-          console.log(value);
-          console.log("---99");
-          if (value !== null) {
+          const value = await AsyncStorage.getItem("@email");
+          const value1= await AsyncStorage.getItem('@phoneNo');
+          const value3 = await AsyncStorage.getItem('@firstName');
+          const value4 = await AsyncStorage.getItem('@lastName');  
+          
+   
+         const data  = JSON.parse(value);
+         const data1  = JSON.parse(value1);
+        //  const data2  = JSON.parse(value2);
+         const data3  = JSON.parse(value3);
+         const data4  = JSON.parse(value4);
+
+           console.log({value});
+          if (data||data1||data3||data4) {
               // We have data!!
-              console.log(JSON.parse(value));
-              console.log("----");
-              setJson(value);
-              //profile.first = va
+              console.log("--888--");
+              console.log({value});
+              setEmail(data);
+              setEmailNew(data);
+              setFirst(data3);
+              setLast(data4);
+              setphoneNo(data1.toString());
+              
           }
        } catch (error) {
           // Error retrieving data
@@ -53,12 +87,7 @@ const UpdateAccount = ({navigation})  => {
        }
       };
       user();
-      },[]);
-
-//   const handleSubmit = () => {
-
-//     navigation.pop();
-//   }
+      }, []);
 
   const handleSubmit = () => {
     
@@ -100,10 +129,10 @@ const UpdateAccount = ({navigation})  => {
    
      setLoading(true);
 
-    let dataToSend = 
+    const dataToSend = 
     JSON.stringify({
-      newEmail : email,
-      email: "jane.doe@example.com",
+      newEmail : emailNew,
+      email: email,
       firstName: first,
       lastName:last,
       phoneNumber:phoneNo,
@@ -127,14 +156,20 @@ const UpdateAccount = ({navigation})  => {
         // If server response message same as Data Matched
         if (responseJson.status.statusResponse == "Success") {
           if (responseJson.userDetailsList != null) {
+            setFlag(true);
             console.log('lsls');
+            setjson((prevData) => ({
+                ...prevData,
+                email: responseJson.userDetailsList[0].email,
+                phoneNo: responseJson.userDetailsList[0].phoneNumber,
+                first: responseJson.userDetailsList[0].firstName,
+                last: responseJson.userDetailsList[0].lastName,
+              }));
+
             setUserName(responseJson.userDetailsList[0].firstName + ' ' + responseJson.userDetailsList[0].lastName ) 
+           
           }
-         
-          navigation.pop();
         } else {
-          // setErrortext('Please check your email id or password');
-          // console.log('Please check your email id or password');
            alert(responseJson.status.responseMessage);
           return;
           
@@ -150,7 +185,7 @@ const UpdateAccount = ({navigation})  => {
 
   return (
     <View style={styles.container}>
-    
+      <Text style={styles.h2}>Profile</Text>
       <View style={styles.form}>
         <Text style={styles.label}>First Name</Text>
         <TextInput
@@ -172,7 +207,7 @@ const UpdateAccount = ({navigation})  => {
           style={styles.input}
           placeholder="Enter Email"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={setEmailNew}
         />
         <Text style={styles.label}>Phone Number</Text>
         <TextInput  
@@ -181,7 +216,7 @@ const UpdateAccount = ({navigation})  => {
           value={phoneNo}
           onChangeText={setphoneNo}
         />
-        <TouchableOpacity style={styles.button} onPress={() => handleSubmit({first, email, last, phoneNo})}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
       </View>
@@ -191,18 +226,22 @@ const UpdateAccount = ({navigation})  => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop:20,
+  container: {  
+    paddingTop:0,
+    marginTop:0,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   form: {
-    marginTop:20,
+    marginTop:0,
     width: '80%',
   },
   label: {
     marginTop: 20,
+  },
+  h2:{
+    fontSize:40,
   },
   input: {
     borderColor: '#ccc',
