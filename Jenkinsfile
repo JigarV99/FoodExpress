@@ -4,17 +4,22 @@ pipeline {
         githubPush()
     }
     stages {
-        stage('Build') {
+        
+         stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+             
+        stage('Deploy Build') {
             steps {
                 sh 'sudo python3 /home/ubuntu/deployScript.py'
             }
         }
         
-        stage('QA') {
+        stage('Deploy QA') {
             steps {
                 sh 'sudo python3 /home/ubuntu/deployQA.py'
             }
-        }
-        
+        }       
     }
 }
