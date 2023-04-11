@@ -23,4 +23,10 @@ pipeline {
             }
         }       
     }
+    
+    post {
+      always {
+        emailext body: 'Email Notification  for deployment', recipientProviders: [[$class: 'jigarvaishnav100@gmail.com']], subject: 'Test'
+    }
+  }
 }
