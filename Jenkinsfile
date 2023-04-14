@@ -24,9 +24,15 @@ pipeline {
         }       
     }
     
-    post {
-      always {
-        emailext body: 'Email Notification  for deployment', recipientProviders: [[$class: 'jigarvaishnav100@gmail.com']], subject: 'Test'
+     post {
+        always {
+                mail body: "Email Notification  for deployment,\n\n${currentBuild.currentResult}: Job ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild ID: ${env.BUILD_ID}\n\nMore info at: ${env.BUILD_URL}\n\n-Jenkins", cc: '', from: '', replyTo: '', subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}", to: 'jigarvaishnav06@gmail.com'   
+        }
     }
-  }
+    
+//     post {
+//       always {
+//         emailext body: 'Email Notification  for deployment', recipientProviders: [[$class: 'jigarvaishnav100@gmail.com']], subject: 'Test'
+//     }
+//   }
 }
