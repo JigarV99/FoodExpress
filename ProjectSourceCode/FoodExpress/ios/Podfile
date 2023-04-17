@@ -2,7 +2,7 @@ require File.join(File.dirname(`node --print "require.resolve('expo/package.json
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+platform :ios, '13.0'
 install! 'cocoapods', :deterministic_uuids => false
 
     
@@ -35,6 +35,18 @@ target 'FoodDelivery' do
     # An absolute path to your application root.
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
+
+  # pod 'react-native-maps', path: '../node_modules/react-native-maps'
+  # pod 'react-native-google-maps', path: '../node_modules/react-native-maps'
+  # pod 'GoogleMaps'
+  # pod 'Google-Maps-iOS-Utils'
+
+  pod 'Google-Maps-iOS-Utils', :git => 'https://github.com/Simon-TechForm/google-maps-ios-utils.git', :branch => 'feat/support-apple-silicon'
+
+rn_maps_path = '../node_modules/react-native-maps'
+pod 'react-native-google-maps', :path => rn_maps_path
+pod 'GoogleMaps'
+
 
   target 'FoodDeliveryTests' do
     inherit! :complete

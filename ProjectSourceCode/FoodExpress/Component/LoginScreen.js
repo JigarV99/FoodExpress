@@ -75,9 +75,10 @@ const LoginScreen = ({navigation}) => {
       alert('enter valid email address');
       return;
     }
-
+  
+    navigation.navigate('MyTabs')
      setLoading(true);
-
+   
     let dataToSend = 
     JSON.stringify({
       email: userEmail,
