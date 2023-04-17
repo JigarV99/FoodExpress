@@ -84,7 +84,7 @@ const LoginScreen = ({navigation}) => {
       password: userPassword});
       console.log(dataToSend);
       //aws sucks
-    fetch('http://ec2-54-172-234-20.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
+    fetch('http://ec2-34.227.94.85.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
       method: 'POST',
       body:  dataToSend,
       headers: {
