@@ -149,7 +149,7 @@ const UpdateAccount = ({navigation})  => {
     });
       console.log(dataToSend);
       //aws sucks  ec2-18-234-107-170
-    fetch('http://ec2-100.25.149.48.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/update', {
+    fetch('http://ec2-34.227.94.85.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/update', {
       method: 'POST',
       body:  dataToSend,
       headers: {

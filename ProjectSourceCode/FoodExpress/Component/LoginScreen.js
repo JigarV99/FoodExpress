@@ -75,16 +75,17 @@ const LoginScreen = ({navigation}) => {
       alert('enter valid email address');
       return;
     }
-
+  
+    navigation.navigate('MyTabs')
      setLoading(true);
-
+   
     let dataToSend = 
     JSON.stringify({
       email: userEmail,
       password: userPassword});
       console.log(dataToSend);
       //aws sucks
-    fetch('http://ec2-100.25.149.48.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
+    fetch('http://ec2-34.227.94.85.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
       method: 'POST',
       body:  dataToSend,
       headers: {
