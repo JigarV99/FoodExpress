@@ -85,7 +85,7 @@ const LoginScreen = ({navigation}) => {
       password: userPassword});
       console.log(dataToSend);
       //aws sucks
-    fetch('http://ec2-34.227.94.85.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
+    fetch('http://ec2-18.209.179.66.compute-1.amazonaws.com:8080/FoodExpressApplication/foodexpressuser/login', {
       method: 'POST',
       body:  dataToSend,
       headers: {
@@ -127,7 +127,7 @@ const LoginScreen = ({navigation}) => {
         } else {
           // setErrortext('Please check your email id or password');
           // console.log('Please check your email id or password');
-           alert(responseJson.status.responseMessage);
+          // alert(responseJson.status.responseMessage);
           return;
           
         }
@@ -135,7 +135,7 @@ const LoginScreen = ({navigation}) => {
       .catch((error) => {
         //Hide Loader
         setLoading(false);
-        console.error(error);
+        //console.error(error);
       });
    };
 

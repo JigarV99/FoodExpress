@@ -12,42 +12,46 @@ const CardFormScreen = () => {
   const [cvv, setCvv] = useState('');
   const [paymentComplete, setPaymentComplete] = useState(false);
   const [jsnon,setjson] = useState({cardNumber: null ,cardHolderName :null,expiryDate:null,cvv:null,paymentComplete:null});
-
+  const [flag, setFlag] = useState(false);
 //   const [recoilCurrentUser, setRecoilCurrentUser] = useRecoilState(userPayment);
   const handlePayment = async () => {
     // Handle payment logic here
-      
+    setFlag(true);
       setjson((prevData) => ({
         ...prevData,
         cardNumber: cardNumber,
         cardHolderName: cardHolderName,
         expiryDate: expiryDate,
         cvv: cvv,
-        paymentComplete: paymentComplete
+        paymentComplete: true
       }));
       setPaymentComplete(true);
-      console.log({jsnon});
+      //console.log({jsnon});
   };
 
   useEffect(() => {
+    if (flag) {
         const storeData = async () => {
             try {
               // if (jsnon.email !== null){
                 console.log({jsnon});
-                console.log("STORE DATA USE_EFFECT");
+                console.log("STORE DATA USE_EFFECT--");
                 await AsyncStorage.setItem('@cardNumber', JSON.stringify(jsnon.cardNumber));
                 await AsyncStorage.setItem('@cardHolderName',  JSON.stringify(jsnon.cardHolderName));
-                 await AsyncStorage.setItem('@cvv', JSON.stringify(json.cvv));
-                await AsyncStorage.setItem('@expiryDate', JSON.stringify(json.expiryDate));
-                await AsyncStorage.setItem('@paymentComplete', JSON.stringify(json.paymentComplete));
+                await AsyncStorage.setItem('@cvv', JSON.stringify(jsnon.cvv));
+                await AsyncStorage.setItem('@expiryDate', JSON.stringify(jsnon.expiryDate));
+                await AsyncStorage.setItem('@paymentComplete', JSON.stringify(jsnon.paymentComplete));
             } catch (err) {
               console.log('Error in Login: ', err);
             }
           };
           storeData();
+          setFlag(false);
+        }
 },[jsnon]);
 
   useEffect(() => {
+    console.log("wdwdjwijid");
     const user = async () => {
     try {
       const value = await AsyncStorage.getItem('@cardNumber');
@@ -60,7 +64,7 @@ const CardFormScreen = () => {
      const data3  = JSON.parse(value3);
      const data4  = JSON.parse(value4);
      const data5  = JSON.parse(value5);
-
+     console.log(value1);
       if (data||data1||data3||data4||data5) {
           setCardNumber(data);
           setCardHolderName(data1);

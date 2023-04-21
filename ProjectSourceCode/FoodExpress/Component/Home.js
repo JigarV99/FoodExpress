@@ -16,12 +16,12 @@ const Home = ({ navigation }) => {
     // Dummy Datas
 
     const initialCurrentLocation = {
-        streetName: "New York ",
+        streetName: "Spruce St",
         gps: {
-            latitude: 1.5496614931250685,
-            longitude: 110.36381866919922
+            latitude:  40.7112863299307,
+            longitude: -74.00519329334803,
         }
-    }
+    } 
 
     const categoryData = [
         {
@@ -135,8 +135,8 @@ const Home = ({ navigation }) => {
             photo: images.pizza_restaurant,
             duration: "15 - 20 min",
             location: {
-                latitude: 1.556306570595712,
-                longitude: 110.35504616746915,
+                latitude:  40.71010046533276,
+                longitude: -74.00768209286001,
             },
             courier: {
                 avatar: images.avatar_2,
