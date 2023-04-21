@@ -4,6 +4,7 @@ import { Feather } from "@expo/vector-icons";
 import {createStackNavigator} from '@react-navigation/stack';
 import Account from "./Account";
 import UpdateAccount from "./UpdateAccount";
+import CardFormScreen from './CardFormScreen';
 const Stack = createStackNavigator();
 const AccountStack = (props) => {
   return (
@@ -22,6 +23,13 @@ const AccountStack = (props) => {
       options={{headerShown: true}}
       
     />
+
+  <Stack.Screen
+      name="Payment"
+      component={CardFormScreen}
+      options={{headerShown: true}}
+      
+    />  
     {/* Navigation Drawer as a landing page */}
   </Stack.Navigator>
 

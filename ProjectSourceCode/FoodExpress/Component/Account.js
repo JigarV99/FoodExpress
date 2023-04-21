@@ -62,6 +62,14 @@ import {
     }}>
       <Text style={styles.changeAvatarButtonText}>Edit Profile</Text>
     </TouchableOpacity>
+
+    <TouchableOpacity style={styles.containerp} onPress={() => {
+
+     navigation.navigate('Payment');
+
+}}>
+      <Text style={styles.labelp}>Add Payment</Text>
+    </TouchableOpacity>
   </View>
   <View style={styles.form}>
 
@@ -75,6 +83,22 @@ import {
 
   }
   const styles = StyleSheet.create({
+
+    containerp: {
+      backgroundColor: '#fff',
+      borderRadius: 5,
+      borderWidth: 1,
+      borderColor: '#ccc',
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+    },
+    labelp: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: '#0066cc',
+    },
+
+
     container: {
       flex: 1,
       alignItems: 'center',

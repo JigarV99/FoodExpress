@@ -14,7 +14,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import {createStackNavigator} from '@react-navigation/stack';
 import OrderDelivery from './Component/OrderDelivery'
-
+import CardFormScreen from './Component/CardFormScreen';
 import {
   SafeAreaView,
   ScrollView,
@@ -182,7 +182,6 @@ const App: () => Node = () => {
         />  
         <Stack.Screen name="Restaurant" component={Restaurant}  options={{headerShown: false}} />
         <Stack.Screen name="OrderDelivery" component={OrderDelivery} options={{headerShown: false}}/>
-
         {/* Navigation Drawer as a landing page */}
       </Stack.Navigator>
     </NavigationContainer>
