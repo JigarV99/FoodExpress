@@ -5,7 +5,7 @@ import { userPayment } from '../atoms/userPayment';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { json } from 'express/lib/response';
 
-const CardFormScreen = () => {
+const CardFormScreen = ({navigation}) => {
   const [cardNumber, setCardNumber] = useState('');
   const [cardHolderName, setCardHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
@@ -13,7 +13,7 @@ const CardFormScreen = () => {
   const [paymentComplete, setPaymentComplete] = useState(false);
   const [jsnon,setjson] = useState({cardNumber: null ,cardHolderName :null,expiryDate:null,cvv:null,paymentComplete:null});
   const [flag, setFlag] = useState(false);
-//   const [recoilCurrentUser, setRecoilCurrentUser] = useRecoilState(userPayment);
+  const [recoilCurrentUser, setRecoilCurrentUser] = useRecoilState(userPayment);
   const handlePayment = async () => {
     // Handle payment logic here
     setFlag(true);
@@ -25,6 +25,12 @@ const CardFormScreen = () => {
         cvv: cvv,
         paymentComplete: true
       }));
+
+      setRecoilCurrentUser((prevData) => ({
+        ...prevData,
+        cardNumber: cardNumber,
+        cardHolderName: cardHolderName,
+      }))
       setPaymentComplete(true);
       //console.log({jsnon});
   };
@@ -47,6 +53,7 @@ const CardFormScreen = () => {
           };
           storeData();
           setFlag(false);
+          navigation.pop();
         }
 },[jsnon]);
 
@@ -82,8 +89,8 @@ const CardFormScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Payment Details</Text>
-      {!paymentComplete && (
+      <Text style={styles.title}>Card Details</Text>
+      {paymentComplete && (
         <View style={styles.formContainer}>
           <TextInput
             style={styles.input}
@@ -111,13 +118,14 @@ const CardFormScreen = () => {
             keyboardType="numeric"
             value={cvv}
             onChangeText={setCvv}
+            secureTextEntry={true}
           />
           <TouchableOpacity style={styles.button} onPress={handlePayment}>
-            <Text style={styles.buttonText}>Pay Add</Text>
+            <Text style={styles.buttonText}>Edit</Text>
           </TouchableOpacity>
         </View>
       )}
-      {paymentComplete && (
+      {/* {paymentComplete && (
         <View style={styles.paymentCompleteContainer}>
           <Text style={styles.paymentCompleteText}>Payment Complete!</Text>
           <Text style={styles.savedDetailsText}>Card Number: {cardNumber}</Text>
@@ -125,7 +133,7 @@ const CardFormScreen = () => {
           <Text style={styles.savedDetailsText}>Expiry Date: {expiryDate}</Text>
           <Text style={styles.savedDetailsText}>CVV: {cvv}</Text>
         </View>
-      )}
+      )} */}
     </View>
   );
 };

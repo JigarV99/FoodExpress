@@ -24,7 +24,8 @@ import {
 
     const [input, setInput] = useState('');
     const recoilCurrentUser = useRecoilValue(currentUserState);
-  
+    
+    
     const handleSubmit = () => {
       navigation.popToTop();
     }
@@ -49,36 +50,49 @@ import {
 
     return( 
   <View style={styles.container}>
-  <View style={styles.avatarContainer}>
-    <Image
-      style={styles.avatar}
-      source={require('../assets/images/avatar-3.jpg')}
-    />
-    <Text style={styles.label}>{recoilCurrentUser.firstName} {recoilCurrentUser.lastName}</Text>
-    <TouchableOpacity style={styles.changeAvatarButton} onPress={() => {
+    <View style={styles.avatarContainer}>
+      <Image
+        style={styles.avatar}
+        source={require('../assets/images/avatar-3.jpg')}
+      />
+      {/* {recoilCurrentUser.firstName} {recoilCurrentUser.lastName} */}
+      <Text style={styles.label}>Jigar Vaishnav</Text>
+      <TouchableOpacity style={styles.changeAvatarButton} onPress={() => {
 
-       navigation.navigate('UpdateAccount');
+        navigation.navigate('UpdateAccount');
 
-    }}>
-      <Text style={styles.changeAvatarButtonText}>Edit Profile</Text>
-    </TouchableOpacity>
+      }}>
+        <Text style={styles.changeAvatarButtonText}>Edit Profile</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.containerp} onPress={() => {
+      <TouchableOpacity style={styles.containerp} onPress={() => {
 
-     navigation.navigate('Payment');
+      navigation.navigate('Payment');
 
-}}>
-      <Text style={styles.labelp}>Add Payment</Text>
-    </TouchableOpacity>
-  </View>
-  <View style={styles.form}>
+  }}>
+      <View></View>
+        <Text style={styles.labelp}>Add Payment </Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
-      <Text style={styles.buttonText}>Logout</Text>
-    </TouchableOpacity>
-  </View>
+      <TouchableOpacity style={styles.containerp} onPress={() => {
 
-</View>
+  navigation.navigate('Rating');
+
+  }}>
+  
+  <Text style={styles.labelp}>Add Rating </Text>
+  </TouchableOpacity>
+
+    </View>
+
+    <View style={styles.form}>
+
+      <TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+        <Text style={styles.buttonText}>Logout</Text>
+      </TouchableOpacity>
+    </View>
+
+   </View>
     );
 
   }
@@ -91,6 +105,7 @@ import {
       borderColor: '#ccc',
       paddingHorizontal: 10,
       paddingVertical: 5,
+      margin:5,
     },
     labelp: {
       fontSize: 16,
@@ -124,6 +139,7 @@ import {
       borderRadius: 5,
       paddingVertical: 10,
       paddingHorizontal: 20,
+      marginBottom:30,
       // justifyContent: 'center',
     },
     buttonText: {
@@ -140,7 +156,7 @@ import {
       borderRadius: 50,
     },
     changeAvatarButton: {
-      marginTop: 10,
+      marginTop: 0,
     },
     changeAvatarButtonText: {
       color: '#1E90FF',

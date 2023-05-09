@@ -76,7 +76,7 @@ const LoginScreen = ({navigation}) => {
       return;
     }
   
-    //navigation.navigate('MyTabs')
+    navigation.navigate('MyTabs')
      setLoading(true);
    
     let dataToSend = 

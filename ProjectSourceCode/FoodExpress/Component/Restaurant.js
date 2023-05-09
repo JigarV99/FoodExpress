@@ -10,6 +10,8 @@ import {
 } from "react-native";
 
 import { icons, COLORS, SIZES, FONTS } from '../constants'
+import { useRecoilValue } from "recoil";
+import {userPayment} from '../atoms/userPayment'
 
 const Restaurant = ({ route, navigation }) => {
 
@@ -17,7 +19,7 @@ const Restaurant = ({ route, navigation }) => {
     const [restaurant, setRestaurant] = React.useState(null);
     const [currentLocation, setCurrentLocation] = React.useState(null);
     const [orderItems, setOrderItems] = React.useState([]);
-
+    const recoilPayment = useRecoilValue(userPayment);
     React.useEffect(() => {
         let { item, currentLocation } = route.params;
 
@@ -375,7 +377,7 @@ const Restaurant = ({ route, navigation }) => {
                                     tintColor: COLORS.darkgray
                                 }}
                             />
-                            <Text style={{ marginLeft: SIZES.padding, ...FONTS.h4 }}>8888</Text>
+                            <Text style={{ marginLeft: SIZES.padding, ...FONTS.h4 }}>{recoilPayment.cardNumber}</Text>
                         </View>
                     </View>
 

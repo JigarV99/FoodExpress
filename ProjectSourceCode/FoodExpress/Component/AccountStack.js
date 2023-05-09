@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import Account from "./Account";
 import UpdateAccount from "./UpdateAccount";
 import CardFormScreen from './CardFormScreen';
+import RatingScreen from "./RatingScreen";
 const Stack = createStackNavigator();
 const AccountStack = (props) => {
   return (
@@ -27,6 +28,12 @@ const AccountStack = (props) => {
   <Stack.Screen
       name="Payment"
       component={CardFormScreen}
+      options={{headerShown: true}}
+      
+    /> 
+    <Stack.Screen
+      name="Rating"
+      component={RatingScreen}
       options={{headerShown: true}}
       
     />  
