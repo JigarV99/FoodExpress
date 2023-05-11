@@ -5,6 +5,7 @@ import { AntDesign } from '@expo/vector-icons';
 const RatingScreen = ({navigation}) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
+  const [isFlag, setFlag] = useState(true);
 
   const handleRating = (value) => {
     setRating(value);
@@ -19,6 +20,7 @@ const RatingScreen = ({navigation}) => {
       console.error(error);
     }
 
+    alert('Thank you for your valuable feedback');
     navigation.pop();
   };
 
@@ -32,6 +34,7 @@ const RatingScreen = ({navigation}) => {
         if (value !== null && value1 !== null) {
             setRating(value);
             setReview(value1);
+            setFlag(false);
         }
       } catch (e) {
         //alert('Failed to fetch the input from storage');
@@ -62,10 +65,15 @@ const RatingScreen = ({navigation}) => {
         onPress={handleSubmit}
         disabled={!rating || !review}
       >
-        {rating == 0 && (
+        {isFlag && (
          <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>Submit</Text>
         )
         }
+
+        {!isFlag &&(
+         <Text style={{ color: '#fff', fontSize: 18, textAlign: 'center' }}>Resubmit Review</Text>
+        )}
+
       </TouchableOpacity>
     </View>
   );

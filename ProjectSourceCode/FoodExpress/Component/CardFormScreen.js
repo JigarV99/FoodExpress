@@ -10,13 +10,62 @@ const CardFormScreen = ({navigation}) => {
   const [cardHolderName, setCardHolderName] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
-  const [paymentComplete, setPaymentComplete] = useState(false);
+  const [paymentComplete, setPaymentComplete] = useState(true);
   const [jsnon,setjson] = useState({cardNumber: null ,cardHolderName :null,expiryDate:null,cvv:null,paymentComplete:null});
   const [flag, setFlag] = useState(false);
   const [recoilCurrentUser, setRecoilCurrentUser] = useRecoilState(userPayment);
+  const [isFlag, setiSFlag] = useState(true);
+
+  const validateCardNumber = () => {
+    const regex = /^4[0-9]{12}(?:[0-9]{3})?$/;
+    if (cardNumber === '') {
+      alert('Please enter a card number');
+    // } else if (!regex.test(cardNumber)) {
+    //   alert('Please enter a valid card number');
+     }
+     else {
+      return true;
+    }
+  };
+
+  const validateCardHolderName = () => {
+    const regex = /^[a-zA-Z ]+$/;
+    if (cardHolderName === '') {
+      alert('Please enter a cardholder name');
+    } else if (!regex.test(cardHolderName)) {
+      alert('Please enter a valid cardholder name');
+    } else {
+      return true;
+    }
+  };
+
+  const validateExpiryDate = () => {
+    const regex = /^(0[1-9]|1[0-2])\/([0-9]{2})$/;
+    if (expiryDate === '') {
+      alert('Please enter an expiry date');
+    } else if (!regex.test(expiryDate)) {
+      alert('Please enter a valid expiry date (MM/YY)');
+    } else {
+      return true;
+    }
+  };
+
+  const validateCvv = () => {
+    const regex = /^[0-9]{3,4}$/;
+    if (cvv === '') {
+      alert('Please enter a CVV');
+    } else if (!regex.test(cvv)) {
+      alert('Please enter a valid CVV');
+    } else {
+      return true;
+    }
+  };
+
   const handlePayment = async () => {
     // Handle payment logic here
-    setFlag(true);
+    console.log("0900");
+    if (validateCardNumber() && validateCardHolderName() && validateExpiryDate() && validateCvv()) {
+      setFlag(true);
       setjson((prevData) => ({
         ...prevData,
         cardNumber: cardNumber,
@@ -33,6 +82,8 @@ const CardFormScreen = ({navigation}) => {
       }))
       setPaymentComplete(true);
       //console.log({jsnon});
+    } 
+    
   };
 
   useEffect(() => {
@@ -53,6 +104,7 @@ const CardFormScreen = ({navigation}) => {
           };
           storeData();
           setFlag(false);
+          setiSFlag(false);
           navigation.pop();
         }
 },[jsnon]);
@@ -78,6 +130,7 @@ const CardFormScreen = ({navigation}) => {
           setExpiryDate(data3);
           setCvv(data4);
           setPaymentComplete(data5);
+          setiSFlag(false);
       }
    } catch (error) {
       // Error retrieving data
@@ -121,7 +174,16 @@ const CardFormScreen = ({navigation}) => {
             secureTextEntry={true}
           />
           <TouchableOpacity style={styles.button} onPress={handlePayment}>
-            <Text style={styles.buttonText}>Edit</Text>
+          {isFlag && (
+          <Text style={styles.buttonText}>Add Payment</Text>
+        )
+        }
+
+        {!isFlag &&(
+          <Text style={styles.buttonText}>Update Payment</Text>
+        )}
+
+           
           </TouchableOpacity>
         </View>
       )}
